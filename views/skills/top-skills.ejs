@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Skills</title>
+    <link rel="stylesheet" href="/CSS/top-skills.css">
+  </head>
+  <body>
+    <h1>Top Skills</h1>
+    <ul>
+      <% topSkills.forEach(skill => { %>
+      <div>
+        <li>
+          <span><%= skill %></span> <br />
+          <a href="/projects?skill=<%= skill %>">View Projects</a>
+        </li>
+      </div>
+
+      <% }) %>
+    </ul>
+  </body>
+</html>

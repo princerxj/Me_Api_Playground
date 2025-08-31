@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Form</title>
+    <link rel="stylesheet" href="/CSS/new.css" />
+  </head>
+  <body>
+    <h2>Profile Form</h2>
+    <form action="/profiles" method="POST" id="profileForm">
+      <!-- Basic Info -->
+      <label>Name:</label>
+      <input type="text" name="name" required />
+
+      <label>Email:</label>
+      <input type="email" name="email" required />
+
+      <label>Education:</label>
+      <textarea name="education" maxlength="500"></textarea>
+
+      <!-- Skills -->
+      <div class="section">
+        <h3>Skills</h3>
+        <div id="skills-container">
+          <input type="text" name="skills[]" placeholder="Skill" required />
+        </div>
+        <button type="button" class="btn" onclick="addSkill()">
+          + Add Skill
+        </button>
+      </div>
+
+      <!-- Projects -->
+      <div class="section">
+        <h3>Projects</h3>
+        <div id="projects-container">
+          <div class="project">
+            <label>Title:</label>
+            <input type="text" name="projects[0][title]" required />
+
+            <label>Description:</label>
+            <textarea name="projects[0][description]" required></textarea>
+
+            <label>Link:</label>
+            <input type="url" name="projects[0][link]" required />
+          </div>
+        </div>
+        <button type="button" class="btn" onclick="addProject()">
+          + Add Project
+        </button>
+      </div>
+
+      <!-- Work Experience -->
+      <div class="section">
+        <h3>Work Experience</h3>
+        <div id="work-container">
+          <div class="job">
+            <label>Job Title:</label>
+            <input type="text" name="workExperience[0][jobTitle]" required />
+
+            <label>Company:</label>
+            <input type="text" name="workExperience[0][company]" required />
+
+            <label>Location:</label>
+            <input type="text" name="workExperience[0][location]" required />
+
+            <label>Start Date:</label>
+            <input type="date" name="workExperience[0][startDate]" required />
+
+            <label>End Date:</label>
+            <input type="date" name="workExperience[0][endDate]" />
+
+            <label>Description:</label>
+            <textarea
+              name="workExperience[0][description]"
+              maxlength="1000"
+            ></textarea>
+          </div>
+        </div>
+        <button type="button" class="btn" onclick="addJob()">+ Add Job</button>
+      </div>
+
+      <!-- Links -->
+      <div class="section">
+        <h3>Links</h3>
+        <label>GitHub:</label>
+        <input type="url" name="links[github]" required />
+
+        <label>LinkedIn:</label>
+        <input type="url" name="links[linkedin]" required />
+
+        <label>Portfolio:</label>
+        <input type="url" name="links[portfolio]" />
+      </div>
+
+      <div id="clientErrors" style="color: red"></div>
+      <button class="btn" type="submit">Submit Profile</button>
+      <script>
+        document
+          .getElementById("profileForm")
+          .addEventListener("submit", function (e) {
+            const errors = [];
+            const name = this.name.value;
+            const email = this.email.value;
+            if (!name || !name.trim()) errors.push("Name is required.");
+            if (!email || !/^\S+@\S+\.\S+$/.test(email))
+              errors.push("Valid email is required.");
+            if (errors.length) {
+              e.preventDefault();
+              document.getElementById("clientErrors").innerText =
+                errors.join("\n");
+            }
+          });
+      </script>
+    </form>
+
+    <script src="/Scripts/new.js"></script>
+  </body>
+</html>

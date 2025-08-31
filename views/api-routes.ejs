@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Routes</title>
+  <link rel="stylesheet" href="/CSS/index.css" />
+</head>
+<body>
+  <h1>Available API Routes</h1>
+  <ul>
+    <li><strong>GET /health</strong> <br />
+      <span>Health check endpoint. Returns status.</span>
+    </li>
+    <li><strong>GET /profiles</strong> <br />
+      <span>List all profiles.</span>
+    </li>
+    <li><strong>POST /profiles</strong> <br />
+      <span>Create a new profile. (JSON body required)</span>
+    </li>
+    <li><strong>GET /profiles/:id</strong> <br />
+      <span>Get a single profile by ID.</span>
+    </li>
+    <li><strong>PUT /profiles/:id</strong> <br />
+      <span>Update a profile by ID. (JSON body required)</span>
+    </li>
+    <li><strong>DELETE /profiles/:id</strong> <br />
+      <span>Delete a profile by ID.</span>
+    </li>
+    <li><strong>GET /skills/top</strong> <br />
+      <span>Get top skills across all profiles.</span>
+    </li>
+    <li><strong>GET /projects?skill=SkillName</strong> <br />
+      <span>Get projects by skill name.</span>
+    </li>
+  </ul>
+</body>
+</html>

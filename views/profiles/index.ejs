@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profiles</title>
+    <link rel="stylesheet" href="/CSS/index.css" />
+  </head>
+  <body>
+    <h1>Profiles</h1>
+
+    <form action="/profiles/new" method="GET">
+      <button>Create Profile</button>
+    </form>
+
+    <% profiles.forEach(profile => { %>
+    <div class="profile">
+      <h2><%= profile.name %></h2>
+      <p><strong>Email:</strong> <%= profile.email %></p>
+      <p><strong>Education:</strong> <%= profile.education %></p>
+
+      <h3>Skills:</h3>
+      <ul>
+        <% profile.skills.forEach(skill => { %>
+        <li><%= skill %></li>
+        <% }); %>
+      </ul>
+
+      <h3>Projects:</h3>
+      <ul>
+        <% profile.projects.forEach(project => { %>
+        <li>
+          <a href="<%= project.link %>"><%= project.title %></a> - <%=
+          project.description %>
+        </li>
+        <% }); %>
+      </ul>
+
+      <h3>Work Experience:</h3>
+      <ul>
+        <% profile.workExperience.forEach(job => { %>
+        <li>
+          <strong><%= job.jobTitle %></strong> at <%= job.company %> (<%=
+          job.startDate.toDateString() %> - <%= job.endDate ?
+          job.endDate.toDateString() : "Present" %>)
+          <p><%= job.description %></p>
+        </li>
+        <% }); %>
+      </ul>
+
+      <h3>Links:</h3>
+      <ul>
+        <li><a href="<%= profile.links.github %>">GitHub</a></li>
+        <li><a href="<%= profile.links.linkedin %>">LinkedIn</a></li>
+        <li><a href="<%= profile.links.portfolio %>">Portfolio</a></li>
+      </ul>
+
+      <div class="action-buttons">
+        <form
+          action="/profiles/<%= profile._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button type="submit" style="background-color: #dc3545">
+            Delete Profile
+          </button>
+        </form>
+        <form action="/profiles/<%= profile._id %>/edit" method="GET">
+          <button type="submit" style="background-color: #28a745">
+            Edit Profile
+          </button>
+        </form>
+      </div>
+    </div>
+    <% }); %>
+  </body>
+</html>

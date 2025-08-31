@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/CSS/edit.css" />
+  </head>
+  <body>
+    <h2>Edit Profile</h2>
+    <form action="/profiles/<%= profile._id %>?_method=PUT" method="POST">
+      <!-- Basic Info -->
+      <label>Name:</label>
+      <input type="text" name="name" value="<%= profile.name %>" required />
+
+      <label>Email:</label>
+      <input type="email" name="email" value="<%= profile.email %>" required />
+
+      <label>Education:</label>
+      <textarea name="education" maxlength="500"><%= profile.education %></textarea>
+
+      <!-- Skills -->
+      <div class="section">
+        <h3>Skills</h3>
+        <div id="skills-container">
+          <% profile.skills.forEach(function(skill){ %>
+          <div class="skill-item">
+            <input type="text" name="skills[]" value="<%= skill %>" />
+            <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+          </div>
+          <% }) %>
+        </div>
+        <button type="button" class="btn" onclick="addSkill()">+ Add Skill</button>
+      </div>
+
+      <!-- Projects -->
+      <div class="section">
+        <h3>Projects</h3>
+        <div id="projects-container">
+          <% profile.projects.forEach(function(p, idx){ %>
+          <div class="project">
+            <label>Title:</label>
+            <input type="text" name="projects[<%= idx %>][title]" value="<%= p.title %>" required />
+            <label>Description:</label>
+            <textarea name="projects[<%= idx %>][description]" required><%= p.description %></textarea>
+            <label>Link:</label>
+            <input type="url" name="projects[<%= idx %>][link]" value="<%= p.link %>" required />
+            <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+          </div>
+          <% }) %>
+        </div>
+        <button type="button" class="btn" onclick="addProject()">+ Add Project</button>
+      </div>
+
+      <!-- Work Experience -->
+      <div class="section">
+        <h3>Work Experience</h3>
+        <div id="work-container">
+          <% profile.workExperience.forEach(function(job, idx){ %>
+          <div class="job">
+            <label>Job Title:</label>
+            <input type="text" name="workExperience[<%= idx %>][jobTitle]" value="<%= job.jobTitle %>" required />
+            <label>Company:</label>
+            <input type="text" name="workExperience[<%= idx %>][company]" value="<%= job.company %>" required />
+            <label>Location:</label>
+            <input type="text" name="workExperience[<%= idx %>][location]" value="<%= job.location %>" required />
+            <label>Start Date:</label>
+            <input type="date" name="workExperience[<%= idx %>][startDate]" value="<%= job.startDate.toISOString().slice(0,10) %>" required />
+            <label>End Date:</label>
+            <input type="date" name="workExperience[<%= idx %>][endDate]" value="<%= job.endDate ? job.endDate.toISOString().slice(0,10) : '' %>" />
+            <label>Description:</label>
+            <textarea name="workExperience[<%= idx %>][description]" maxlength="1000"><%= job.description %></textarea>
+            <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+          </div>
+          <% }) %>
+        </div>
+        <button type="button" class="btn" onclick="addJob()">+ Add Job</button>
+      </div>
+
+      <!-- Links -->
+      <div class="section">
+        <h3>Links</h3>
+        <label>GitHub:</label>
+        <input type="url" name="links[github]" value="<%= profile.links.github %>" required />
+        <label>LinkedIn:</label>
+        <input type="url" name="links[linkedin]" value="<%= profile.links.linkedin %>" required />
+        <label>Portfolio:</label>
+        <input type="url" name="links[portfolio]" value="<%= profile.links.portfolio %>" />
+      </div>
+
+      <button class="btn" type="submit">Update Profile</button>
+      <script>
+        function removeItem(btn) {
+          btn.parentElement.remove();
+        }
+        function addSkill() {
+          const container = document.getElementById('skills-container');
+          const div = document.createElement('div');
+          div.className = 'skill-item';
+          div.innerHTML = `<input type="text" name="skills[]" placeholder="Add new skill" /> <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>`;
+          container.appendChild(div);
+        }
+        function addProject() {
+          const container = document.getElementById('projects-container');
+          const idx = container.children.length;
+          const div = document.createElement('div');
+          div.className = 'project';
+          div.innerHTML = `
+            <label>Title:</label>
+            <input type="text" name="projects[${idx}][title]" required />
+            <label>Description:</label>
+            <textarea name="projects[${idx}][description]" required></textarea>
+            <label>Link:</label>
+            <input type="url" name="projects[${idx}][link]" required />
+            <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+          `;
+          container.appendChild(div);
+        }
+        function addJob() {
+          const container = document.getElementById('work-container');
+          const idx = container.children.length;
+          const div = document.createElement('div');
+          div.className = 'job';
+          div.innerHTML = `
+            <label>Job Title:</label>
+            <input type="text" name="workExperience[${idx}][jobTitle]" required />
+            <label>Company:</label>
+            <input type="text" name="workExperience[${idx}][company]" required />
+            <label>Location:</label>
+            <input type="text" name="workExperience[${idx}][location]" required />
+            <label>Start Date:</label>
+            <input type="date" name="workExperience[${idx}][startDate]" required />
+            <label>End Date:</label>
+            <input type="date" name="workExperience[${idx}][endDate]" />
+            <label>Description:</label>
+            <textarea name="workExperience[${idx}][description]" maxlength="1000"></textarea>
+            <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+          `;
+          container.appendChild(div);
+        }
+      </script>
+      <script src="/Scripts/edit.js"></script>
+    </form>
+  </body>
+</html>
