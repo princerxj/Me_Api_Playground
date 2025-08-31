@@ -27,7 +27,7 @@ router
 
 router
   .route("/:id/edit")
-  .get(basicAuth, wrapAsync(profileController.renderEditForm));
+  .get(wrapAsync(profileController.renderEditForm));
 
 router
   .route("/:id")
