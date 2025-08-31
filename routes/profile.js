@@ -25,11 +25,15 @@ router
   .get(wrapAsync(profileController.getAllProfiles))
   .post(wrapAsync(profileController.createProfile));
 
-router.route("/:id/edit").get(basicAuth, wrapAsync(profileController.renderEditForm));
+router
+  .route("/:id/edit")
+  .get(basicAuth, wrapAsync(profileController.renderEditForm));
+
 router
   .route("/:id")
-  .put(wrapAsync(profileController.updateProfileById))
-  .delete(wrapAsync(profileController.deleteProfileById));
+  .put(basicAuth, wrapAsync(profileController.updateProfileById))   // optionally protect PUT too
+  .delete(basicAuth, wrapAsync(profileController.deleteProfileById)); // secured DELETE
+
 
 router.route("/new").get((req, res) => {
   res.render("profiles/new");
