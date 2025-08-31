@@ -8,7 +8,7 @@ function basicAuth(req, res, next) {
   const credentials = Buffer.from(auth.split(' ')[1], 'base64').toString().split(':');
   const [user, pass] = credentials;
   // Replace with your desired username and password and may be stored in .env File
-  if (user === 'admin' && pass === 'password123') {
+  if (user === 'admin' && pass === process.env.ADMIN_PASSWORD) {
     return next();
   }
   res.set('WWW-Authenticate', 'Basic realm="Profile Edit"');
